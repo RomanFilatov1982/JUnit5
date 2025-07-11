@@ -1,12 +1,17 @@
 package guru.qa.date;
 
+
 public enum Languages {
-    //Русский, English (UK),
-    Deutsch("Ihr Mietwagen für jede Reise"), Español("Alquiler de coches para cualquier tipo de viaje");
+
+    DEUTSCH("Günstigere Flüge nur für Mitglieder", "Deutsch"),
+    ENGLISH("Unlock Flights savings with member-only deals", "English (UK)"),
+    POLSKI("Oszczędności dzięki ofertom dla członków", "Polski");
 
     public final String description;
+    public final String name;
 
-    Languages(String description) {
+    Languages(String description, String name) {
         this.description = description;
+        this.name = name;
     }
 }

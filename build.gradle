@@ -20,3 +20,9 @@ tasks.withType(JavaCompile) {
 test {
     useJUnitPlatform()
 }
+
+task demoqa(type: Test) {
+    useJUnitPlatform {
+        includeTags("WEB")
+    }
+}
