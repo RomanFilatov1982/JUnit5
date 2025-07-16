@@ -18,6 +18,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.$$;
+
 public class JUnit5 {
     @BeforeEach
     void setUp() {
@@ -37,42 +38,44 @@ public class JUnit5 {
     }
 
 
-        static Stream<Arguments> successSelectionRent() {
-            return Stream.of(
-            Arguments.of(
-                    Languages.DEUTSCH,
-                    List.of("Vuelos", "Flüge", "Vuelo + Hotel","Alquiler de coches","Atracciones", "Taxis aeropuerto")),
-            Arguments.of(
-                    Languages.ENGLISH,
-                    List.of("Stays", "Flight", "Flight + Hotel","Car rental","Attractions", "Airport taxis")),
-            Arguments.of(
-                    Languages.POLSKI,
-                    List.of("Pobyty", "Loty", "Lot + Hotel", "Wynajem samochodu", "Atrakcje", "Taksówki lotniskowe"))
-            );
-        }
-
-   @MethodSource
-    @ParameterizedTest
-   @Tag("WEB")
-    void bookingSiteShouldDisplayCorrectText(Languages language, List<String> buttonsRent) {
-        $("[data-testid=header-language-picker-trigger]").click();
-        $("#header_language_picker").find(byText(language.name())).click();
-        $$(".c4a6e8e871").filter(visible).shouldHave(texts(buttonsRent));
+    static Stream<Arguments> bookingSiteShouldHaveCorrectNameButtons() {
+        return Stream.of(
+                Arguments.of(
+                        Languages.DEUTSCH,
+                        List.of("Vuelos", "Flüge", "Vuelo + Hotel", "Alquiler de coches", "Atracciones", "Taxis aeropuerto")),
+                Arguments.of(
+                        Languages.ENGLISH,
+                        List.of("Stays", "Flight", "Flight + Hotel", "Car rental", "Attractions", "Airport taxis")),
+                Arguments.of(
+                        Languages.POLSKI,
+                        List.of("Pobyty", "Loty", "Lot + Hotel", "Wynajem samochodu", "Atrakcje", "Taksówki lotniskowe"))
+        );
     }
 
-        @CsvSource(value = {
-                "Авиабилеты, Сравнивайте и бронируйте дешевые авиабилеты — это легко",
-                "Авиабилеты + отели, Je volledige vakantie in één klik",
-                "Аренда автомобилей, Аренда автомобилей для любой поездки",
-                "Варианты досуга, Экскурсии и развлечения",
-                "Такси от/до аэропорта, Забронируйте такси от/до аэропорта"
-        })
+    @MethodSource
+    @ParameterizedTest
+    @Tag("WEB")
+    void bookingSiteShouldHaveCorrectNameButtons(Languages language, List<String> buttonsRent) {
+        $("[data-testid=header-language-picker-trigger]").click();
+        $("#header_language_picker").find(byText(language.name)).click();
+        $$(".Header_tab ").filter(visible).shouldHave(texts(buttonsRent));
+    }
+
+    @CsvSource(value = {
+            "Авиабилеты, Сравнивайте и бронируйте дешевые авиабилеты — это легко",
+            "Авиабилеты + отели, Je volledige vakantie in één klik",
+            "Аренда автомобилей, Аренда автомобилей для любой поездки",
+            "Варианты досуга, Экскурсии и развлечения",
+            "Такси от/до аэропорта, Забронируйте такси от/до аэропорта"
+    })
+
     @ParameterizedTest(name = "Переключение между кнопками {0} и проверки заголовка {1}")
     @Tag("BLOCKER")
     void successSelectionRent(String button, String title) {
         $("[data-testid= header-xpb]").find(byText(button)).click();
-        $("[dir='ltr']").shouldHave(text(title)).click();
+        $("h1").shouldHave(text(title));
     }
+
     @AfterEach
     void afterEach() {
         Selenide.closeWebDriver();

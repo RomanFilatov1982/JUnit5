@@ -3,9 +3,9 @@ package guru.qa.date;
 
 public enum Languages {
 
-    DEUTSCH("Günstigere Flüge nur für Mitglieder", "Deutsch"),
-    ENGLISH("Unlock Flights savings with member-only deals", "English (UK)"),
-    POLSKI("Oszczędności dzięki ofertom dla członków", "Polski");
+    DEUTSCH("Finden Sie Ihre nächste Unterkunft", "Deutsch"),
+    ENGLISH("Find your next stay", "English (UK)"),
+    POLSKI("Znajdź miejsce na kolejny pobyt", "Polski");
 
     public final String description;
     public final String name;
