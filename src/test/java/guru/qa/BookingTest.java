@@ -19,11 +19,11 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.$$;
 
-public class JUnit5 {
+public class BookingTest {
     @BeforeEach
     void setUp() {
         open("https://www.booking.com");
-        Configuration.pageLoadTimeout = 60000;
+        Configuration.pageLoadTimeout = 100000;
         //Configuration.holdBrowserOpen = true;
     }
 
@@ -42,7 +42,7 @@ public class JUnit5 {
         return Stream.of(
                 Arguments.of(
                         Languages.DEUTSCH,
-                        List.of("Vuelos", "Flüge", "Vuelo + Hotel", "Alquiler de coches", "Atracciones", "Taxis aeropuerto")),
+                        List.of("Aufenthalte","Flüge","Flug + Hotel","Mietwagen","Attraktionen","Flughafentaxis")),
                 Arguments.of(
                         Languages.ENGLISH,
                         List.of("Stays", "Flight", "Flight + Hotel", "Car rental", "Attractions", "Airport taxis")),
@@ -58,7 +58,9 @@ public class JUnit5 {
     void bookingSiteShouldHaveCorrectNameButtons(Languages language, List<String> buttonsRent) {
         $("[data-testid=header-language-picker-trigger]").click();
         $("#header_language_picker").find(byText(language.name)).click();
-        $$(".Header_tab ").filter(visible).shouldHave(texts(buttonsRent));
+        $$(".c4a6e8e871").filter(visible).shouldHave(texts(buttonsRent));
+
+
     }
 
     @CsvSource(value = {
